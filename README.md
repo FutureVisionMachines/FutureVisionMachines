@@ -190,24 +190,81 @@ FutureVisionMachines-Website/
 python run.py
 ```
 
-### Production (Gunicorn)
+### Production - Render (RECOMMENDED)
+
+**✨ Auto-deployment enabled!** Every `git push` to master automatically deploys.
+
+#### Quick Deploy
+
+1. **Connect Repository to Render**
+   - Go to [Render Dashboard](https://dashboard.render.com)
+   - New → Blueprint
+   - Connect your GitHub repository
+   - Render auto-detects `render.yaml`
+
+2. **Set Sensitive Environment Variables**
+   ```bash
+   ADMIN_PASSWORD=your-secure-password
+   MAIL_USERNAME=your-smtp-username
+   MAIL_PASSWORD=your-smtp-password
+   ```
+
+3. **Deploy!**
+   - Click "Apply"
+   - Render creates database & web service
+   - Auto-deployment configured
+
+#### Database Setup
+PostgreSQL database included in `render.yaml`:
+- **Name**: futurevisionmachines-db
+- **Region**: Oregon
+- **Plan**: Free
+- Auto-linked to web service
+
+#### After First Deployment
+Initialize database tables via Render Shell:
+```python
+from app import create_app, db
+app = create_app('production')
+with app.app_context():
+    db.create_all()
+```
+
+📖 **Full Guide**: See [RENDER_DEPLOYMENT.md](./RENDER_DEPLOYMENT.md) for complete instructions.
+
+### Production (Manual - Gunicorn)
 ```bash
 gunicorn -w 4 -b 0.0.0.0:5000 "app:create_app('production')"
 ```
 
 ### Production Checklist
-- [ ] Set `FLASK_ENV=production` in `.env`
-- [ ] Use strong `SECRET_KEY`
-- [ ] Change `ADMIN_PASSWORD`
-- [ ] Set up PostgreSQL database
-- [ ] Configure SMTP2GO email
-- [ ] Enable HTTPS
-- [ ] Set `SESSION_COOKIE_SECURE=True`
+- [x] ✅ Render deployment configured
+- [x] ✅ PostgreSQL database set up
+- [x] ✅ Auto-deployment enabled (git push)
+- [ ] Set strong `ADMIN_PASSWORD`
+- [ ] Initialize database tables
+- [ ] Test email sending (SMTP2GO)
+- [ ] Configure custom domain (optional)
+- [ ] Enable HTTPS (auto on Render)
 
-### Recommended Hosting
-- **Render** (Easy deployment)
+### Hosting Options
+- **Render** ⭐ (Recommended - Auto-deployment, free tier)
 - **DigitalOcean** (Full VPS control)
-- **Heroku** (Simple but more expensive)
+- **Heroku** (Simple but paid)
+
+### Auto-Deployment Workflow
+```bash
+# Make changes
+git add .
+git commit -m "Update features"
+git push origin master
+
+# Render automatically:
+# 1. Detects push
+# 2. Runs build script
+# 3. Deploys new version
+# 4. Zero downtime deployment
+```
 
 ---
 

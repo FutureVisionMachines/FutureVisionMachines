@@ -29,11 +29,14 @@ instance/
 *.db
 *.sqlite
 *.sqlite3
+fvm.db
 
 # Environment
 .env
 .env.local
 .env.*.local
+.env.production
+.env.development
 
 # IDEs
 .vscode/
@@ -41,13 +44,27 @@ instance/
 *.swp
 *.swo
 *~
+.DS_Store
 
 # OS
 .DS_Store
 Thumbs.db
+desktop.ini
 
 # Logs
 *.log
+logs/
+*.log.*
+
+# Temp files
+*.tmp
+*.bak
+*.swp
+*~.nib
+
+# Database backups
+*.dump
+*.sql.gz
 
 # Database
 *.db
