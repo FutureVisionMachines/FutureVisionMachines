@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Blog - FutureVisionMachines{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-title">Blog</h1>
+        <p class="page-subtitle">Insights, updates, and technical thoughts</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        {% if posts %}
+            <div class="blog-grid">
+                {% for post in posts %}
+                <article class="blog-card glass-panel">
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">{{ post.published_at|format_datetime if post.published_at else 'Draft' }}</span>
+                            {% if post.views > 0 %}
+                            <span class="blog-views">{{ post.views }} views</span>
+                            {% endif %}
+                        </div>
+                        
+                        <h2 class="blog-title">
+                            <a href="{{ url_for('public.blog_post', slug=post.slug) }}">{{ post.title }}</a>
+                        </h2>
+                        
+                        <p class="blog-excerpt">
+                            {{ post.excerpt or post.content[:200] + '...' }}
+                        </p>
+                        
+                        <a href="{{ url_for('public.blog_post', slug=post.slug) }}" class="blog-read-more">
+                            Read More →
+                        </a>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-state-content glass-panel">
+                    <div class="empty-icon">
+                        <svg width="64" height="64" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2h20l14 14v40a4 4 0 01-4 4H14a4 4 0 01-4-4V6a4 4 0 014-4z"/>
+                            <path d="M34 2v14h14M20 34h16M20 42h16M20 50h10"/>
+                        </svg>
+                    </div>
+                    <h3>No Posts Yet</h3>
+                    <p>We're working on some great content. Subscribe to our newsletter to be notified when we publish.</p>
+                    <form action="{{ url_for('public.subscribe') }}" method="POST" class="inline-form">
+                        <input type="email" name="email" placeholder="Your email" required class="form-input">
+                        <button type="submit" class="btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #EAEAEA;
+            background: #050505;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #0A0A0A;
+            border: 1px solid #222;
+        }
+        .header {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(123, 97, 255, 0.1));
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 2px solid #00E5FF;
+        }
+        .header h1 {
+            color: #00E5FF;
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            padding: 30px 20px;
+        }
+        .content h2 {
+            color: #00E5FF;
+            font-size: 20px;
+        }
+        .highlight-box {
+            background: rgba(0, 229, 255, 0.05);
+            border-left: 3px solid #00E5FF;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .footer {
+            background: #050505;
+            padding: 20px;
+            text-align: center;
+            color: #A0A0A0;
+            font-size: 14px;
+            border-top: 1px solid #222;
+        }
+        .signature {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #222;
+        }
+        .signature strong {
+            color: #00E5FF;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>FutureVisionMachines</h1>
+            <p style="margin: 10px 0 0 0; color: #A0A0A0;">Enterprise-grade software, made accessible</p>
+        </div>
+        <div class="content">
+            <p>Hi {{ lead.name }},</p>
+            
+            <p>Thank you for reaching out to FutureVisionMachines! We've received your inquiry and are excited to learn more about your project.</p>
+            
+            <div class="highlight-box">
+                <strong>What happens next?</strong><br>
+                We'll review your requirements and get back to you within 24-48 hours to discuss how we can help solve your challenges.
+            </div>
+            
+            <p>In the meantime, feel free to reply to this email if you have any additional information or questions.</p>
+            
+            <p>We're looking forward to working with you!</p>
+            
+            <div class="signature">
+                <p>
+                    <strong>Best regards,</strong><br>
+                    Anthony Dinunzio<br>
+                    Founder, FutureVisionMachines<br>
+                    <a href="mailto:anthony@futurevisionmachines.com" style="color: #00E5FF; text-decoration: none;">anthony@futurevisionmachines.com</a>
+                </p>
+            </div>
+        </div>
+        <div class="footer">
+            <p><strong>FutureVisionMachines</strong></p>
+            <p>Edmonton, Alberta, Canada</p>
+            <p style="margin-top: 10px;">
+                <a href="{{ url_for('public.index', _external=True) }}" style="color: #00E5FF; text-decoration: none;">Visit Our Website</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

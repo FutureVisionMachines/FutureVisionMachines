@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}SaaS Products - FutureVisionMachines{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-title">SaaS Products</h1>
+        <p class="page-subtitle">Ready-to-use tools, hosted and maintained for you</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        {% if products %}
+            <div class="saas-grid">
+                {% for product in products %}
+                <div class="saas-card glass-panel">
+                    {% if product.image_url %}
+                    <div class="saas-image">
+                        <img src="{{ product.image_url }}" alt="{{ product.name }}">
+                    </div>
+                    {% endif %}
+                    
+                    <div class="saas-content">
+                        <div class="saas-header">
+                            <h3 class="saas-title">{{ product.name }}</h3>
+                            {% if product.featured %}
+                            <span class="badge badge-featured">Featured</span>
+                            {% endif %}
+                            {% if product.status == 'beta' %}
+                            <span class="badge badge-warning">Beta</span>
+                            {% elif product.status == 'coming_soon' %}
+                            <span class="badge badge-info">Coming Soon</span>
+                            {% endif %}
+                        </div>
+                        
+                        <p class="saas-description">{{ product.short_description or product.description[:150] + '...' }}</p>
+                        
+                        {% if product.price_monthly or product.price_yearly %}
+                        <div class="saas-pricing">
+                            {% if product.price_monthly %}
+                            <div class="price">
+                                <span class="price-amount">${{ product.price_monthly }}</span>
+                                <span class="price-period">/month</span>
+                            </div>
+                            {% endif %}
+                            {% if product.price_yearly %}
+                            <div class="price">
+                                <span class="price-amount">${{ product.price_yearly }}</span>
+                                <span class="price-period">/year</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        
+                        <div class="saas-actions">
+                            {% if product.demo_url %}
+                            <a href="{{ product.demo_url }}" target="_blank" class="btn-secondary">Try Demo</a>
+                            {% endif %}
+                            {% if product.site_url %}
+                            <a href="{{ product.site_url }}" target="_blank" class="btn-primary">Learn More</a>
+                            {% endif %}
+                        </div>
+                        
+                        {% if product.version %}
+                        <div class="saas-meta">
+                            <small>Version {{ product.version }}</small>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-state-content glass-panel">
+                    <div class="empty-icon">
+                        <svg width="64" height="64" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="8" y="8" width="48" height="48" rx="4"/>
+                            <path d="M32 24v16M24 32h16"/>
+                        </svg>
+                    </div>
+                    <h3>Coming Soon</h3>
+                    <p>We're currently developing our SaaS product lineup. Check back soon or subscribe to our newsletter for updates.</p>
+                    <form action="{{ url_for('public.subscribe') }}" method="POST" class="inline-form">
+                        <input type="email" name="email" placeholder="Your email" required class="form-input">
+                        <button type="submit" class="btn-primary">Notify Me</button>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<section class="section section-dark">
+    <div class="container content-narrow">
+        <h2 class="text-center">Need Something Custom?</h2>
+        <p class="text-center">
+            Don't see what you're looking for? We build custom solutions tailored to your specific needs.
+        </p>
+        <div class="text-center">
+            <a href="{{ url_for('public.contact') }}" class="btn-primary btn-lg">Request Custom Solution</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

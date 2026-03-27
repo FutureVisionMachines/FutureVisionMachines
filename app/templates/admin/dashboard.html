@@ -1,0 +1,138 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="admin-content">
+    <div class="admin-header">
+        <h1>Dashboard</h1>
+        <p>Welcome back! Here's what's happening.</p>
+    </div>
+    
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+        <div class="stat-card glass-panel">
+            <div class="stat-icon cyan">👥</div>
+            <div class="stat-details">
+                <div class="stat-value">{{ stats.total_leads }}</div>
+                <div class="stat-label">Total Leads</div>
+                {% if stats.new_leads > 0 %}
+                <div class="stat-badge">{{ stats.new_leads }} new</div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="stat-card glass-panel">
+            <div class="stat-icon purple">🚀</div>
+            <div class="stat-details">
+                <div class="stat-value">{{ stats.active_products }}</div>
+                <div class="stat-label">Active Products</div>
+            </div>
+        </div>
+        
+        <div class="stat-card glass-panel">
+            <div class="stat-icon cyan">📝</div>
+            <div class="stat-details">
+                <div class="stat-value">{{ stats.published_posts }}</div>
+                <div class="stat-label">Published Posts</div>
+            </div>
+        </div>
+        
+        <div class="stat-card glass-panel">
+            <div class="stat-icon purple">📧</div>
+            <div class="stat-details">
+                <div class="stat-value">{{ stats.total_subscribers }}</div>
+                <div class="stat-label">Subscribers</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Lead Status Breakdown -->
+    <div class="dashboard-row">
+        <div class="dashboard-col-8">
+            <div class="dashboard-card glass-panel">
+                <div class="card-header">
+                    <h3>Recent Leads</h3>
+                    <a href="{{ url_for('admin.crm') }}" class="btn-secondary-outline btn-sm">View All</a>
+                </div>
+                <div class="card-content">
+                    {% if recent_leads %}
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Business</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for lead in recent_leads %}
+                                    <tr>
+                                        <td>
+                                            <div class="lead-name">{{ lead.name }}</div>
+                                            <div class="lead-email">{{ lead.email }}</div>
+                                        </td>
+                                        <td>{{ lead.business or '-' }}</td>
+                                        <td><span class="badge {{ lead.status|status_badge }}">{{ lead.status }}</span></td>
+                                        <td>{{ lead.created_at|format_datetime('%b %d, %Y') }}</td>
+                                        <td>
+                                            <a href="{{ url_for('admin.crm_detail', lead_id=lead.id) }}" class="btn-secondary-outline btn-sm">View</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No leads yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="dashboard-col-4">
+            <div class="dashboard-card glass-panel">
+                <div class="card-header">
+                    <h3>Lead Status</h3>
+                </div>
+                <div class="card-content">
+                    {% if lead_breakdown %}
+                        <div class="status-breakdown">
+                            {% for status, count in lead_breakdown %}
+                            <div class="status-item">
+                                <span class="status-label">{{ status }}</span>
+                                <span class="status-count">{{ count }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No data yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="dashboard-card glass-panel">
+                <div class="card-header">
+                    <h3>Quick Actions</h3>
+                </div>
+                <div class="card-content">
+                    <div class="quick-actions">
+                        <a href="{{ url_for('admin.crm') }}?status=new" class="quick-action-btn">
+                            👥 View New Leads
+                        </a>
+                        <a href="{{ url_for('admin.saas_create') }}" class="quick-action-btn">
+                            ➕ Add SaaS Product
+                        </a>
+                        <a href="{{ url_for('admin.blog_create') }}" class="quick-action-btn">
+                            ✍️ Write Blog Post
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "admin/base.html" %}
+
+{% block title %}CRM - Leads{% endblock %}
+
+{% block content %}
+<div class="admin-content">
+    <div class="admin-header">
+        <h1>CRM - Lead Management</h1>
+        <p>Track and manage your leads</p>
+    </div>
+    
+    <!-- Filters -->
+    <div class="crm-filters glass-panel">
+        <div class="filter-tabs">
+            <a href="{{ url_for('admin.crm') }}?status=all" class="filter-tab {% if current_status == 'all' %}active{% endif %}">
+                All
+            </a>
+            <a href="{{ url_for('admin.crm') }}?status=new" class="filter-tab {% if current_status == 'new' %}active{% endif %}">
+                New
+            </a>
+            <a href="{{ url_for('admin.crm') }}?status=contacted" class="filter-tab {% if current_status == 'contacted' %}active{% endif %}">
+                Contacted
+            </a>
+            <a href="{{ url_for('admin.crm') }}?status=qualified" class="filter-tab {% if current_status == 'qualified' %}active{% endif %}">
+                Qualified
+            </a>
+            <a href="{{ url_for('admin.crm') }}?status=closed_won" class="filter-tab {% if current_status == 'closed_won' %}active{% endif %}">
+                Won
+            </a>
+            <a href="{{ url_for('admin.crm') }}?status=closed_lost" class="filter-tab {% if current_status == 'closed_lost' %}active{% endif %}">
+                Lost
+            </a>
+        </div>
+    </div>
+    
+    <!-- Leads Table -->
+    <div class="crm-table glass-panel">
+        {% if leads %}
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Contact Info</th>
+                            <th>Business</th>
+                            <th>Problem</th>
+                            <th>Status</th>
+                            <th>Source</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lead in leads %}
+                        <tr>
+                            <td>
+                                <div class="lead-contact">
+                                    <div class="lead-name">{{ lead.name }}</div>
+                                    <div class="lead-email">{{ lead.email }}</div>
+                                    {% if lead.phone %}
+                                    <div class="lead-phone">{{ lead.phone }}</div>
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td>{{ lead.business or '-' }}</td>
+                            <td>
+                                <div class="lead-problem">{{ lead.problem_description[:100] }}{% if lead.problem_description|length > 100 %}...{% endif %}</div>
+                            </td>
+                            <td>
+                                <span class="badge {{ lead.status|status_badge }}">{{ lead.status }}</span>
+                            </td>
+                            <td>{{ lead.source }}</td>
+                            <td>{{ lead.created_at|format_datetime('%b %d') }}</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="{{ url_for('admin.crm_detail', lead_id=lead.id) }}" class="btn-secondary-outline btn-sm">View</a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p>No leads found with status: {{ current_status }}</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

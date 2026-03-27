@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Preview</title>
+    <style>
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 40px 20px;
+        }
+        .preview-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .preview-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(0, 229, 255, 0.3);
+        }
+        .preview-header h1 {
+            color: #00E5FF;
+            margin-bottom: 10px;
+        }
+        .preview-subject {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 5px;
+        }
+        .preview-label {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .email-preview {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 229, 255, 0.2);
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: rgba(0, 229, 255, 0.1);
+            color: #00E5FF;
+            text-decoration: none;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 229, 255, 0.3);
+        }
+        .back-link:hover {
+            background: rgba(0, 229, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <a href="javascript:window.close()" class="back-link">← Close Preview</a>
+        
+        <div class="preview-header">
+            <h1>📧 Email Preview</h1>
+            <div class="preview-label">Subject:</div>
+            <div class="preview-subject">{{ subject }}</div>
+        </div>
+
+        <div class="email-preview">
+            {{ html_content|safe }}
+        </div>
+    </div>
+</body>
+</html>

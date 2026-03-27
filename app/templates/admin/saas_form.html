@@ -1,0 +1,91 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{% if product %}Edit{% else %}Create{% endif %} SaaS Product{% endblock %}
+
+{% block content %}
+<div class="admin-content">
+    <div class="admin-header">
+        <a href="{{ url_for('admin.saas_manager') }}" class="back-link">← Back to Products</a>
+        <h1>{% if product %}Edit{% else %}Create{% endif %} SaaS Product</h1>
+    </div>
+    
+    <div class="form-card glass-panel">
+        <form action="{% if product %}{{ url_for('admin.saas_edit', product_id=product.id) }}{% else %}{{ url_for('admin.saas_create') }}{% endif %}" method="POST">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Product Name *</label>
+                    <input type="text" id="name" name="name" value="{{ product.name if product else '' }}" required class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label for="version">Version</label>
+                    <input type="text" id="version" name="version" value="{{ product.version if product else '' }}" class="form-input" placeholder="1.0.0">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="short_description">Short Description</label>
+                <input type="text" id="short_description" name="short_description" value="{{ product.short_description if product else '' }}" class="form-input" maxlength="200">
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Full Description *</label>
+                <textarea id="description" name="description" rows="6" required class="form-input">{{ product.description if product else '' }}</textarea>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="demo_url">Demo URL</label>
+                    <input type="url" id="demo_url" name="demo_url" value="{{ product.demo_url if product else '' }}" class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label for="site_url">Product Site URL</label>
+                    <input type="url" id="site_url" name="site_url" value="{{ product.site_url if product else '' }}" class="form-input">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="image_url">Image URL</label>
+                <input type="url" id="image_url" name="image_url" value="{{ product.image_url if product else '' }}" class="form-input">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="price_monthly">Monthly Price ($)</label>
+                    <input type="number" step="0.01" id="price_monthly" name="price_monthly" value="{{ product.price_monthly if product else '' }}" class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label for="price_yearly">Yearly Price ($)</label>
+                    <input type="number" step="0.01" id="price_yearly" name="price_yearly" value="{{ product.price_yearly if product else '' }}" class="form-input">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status" name="status" class="form-input">
+                        <option value="active" {% if product and product.status == 'active' %}selected{% endif %}>Active</option>
+                        <option value="beta" {% if product and product.status == 'beta' %}selected{% endif %}>Beta</option>
+                        <option value="coming_soon" {% if product and product.status == 'coming_soon' %}selected{% endif %}>Coming Soon</option>
+                        <option value="archived" {% if product and product.status == 'archived' %}selected{% endif %}>Archived</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="featured" value="1" {% if product and product.featured %}checked{% endif %}>
+                        Featured Product
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">{% if product %}Update{% else %}Create{% endif %} Product</button>
+                <a href="{{ url_for('admin.saas_manager') }}" class="btn-secondary-outline">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Contact - FutureVisionMachines{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-title">Let's Talk</h1>
+        <p class="page-subtitle">Tell us about your project and we'll get back to you within 24-48 hours</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="contact-layout">
+            <div class="contact-form-section">
+                <form action="{{ url_for('public.contact') }}" method="POST" class="contact-form glass-panel">
+                    <div class="form-group">
+                        <label for="name">Your Name *</label>
+                        <input type="text" id="name" name="name" required class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="business">Business/Company Name</label>
+                        <input type="text" id="business" name="business" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="problem_description">What do you need help with? *</label>
+                        <textarea id="problem_description" name="problem_description" rows="6" required class="form-input"></textarea>
+                        <small class="form-hint">Tell us about your challenges, goals, or the problem you're trying to solve.</small>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary btn-lg btn-block">Send Message</button>
+                </form>
+            </div>
+            
+            <div class="contact-info-section">
+                <div class="contact-info glass-panel">
+                    <h3>Direct Contact</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="6" width="18" height="14" rx="2"/>
+                                <path d="M3 8l9 5 9-5"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="contact-label">Email</div>
+                            <a href="mailto:anthony@futurevisionmachines.com" class="contact-value">anthony@futurevisionmachines.com</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                                <circle cx="12" cy="9" r="2.5"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="contact-label">Location</div>
+                            <div class="contact-value">Edmonton, Alberta, Canada</div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="contact-label">Response Time</div>
+                            <div class="contact-value">24-48 hours</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-cta glass-panel">
+                    <h4>Not Ready to Commit?</h4>
+                    <p>No problem! Subscribe to our newsletter for updates, insights, and occasional free resources.</p>
+                    <form action="{{ url_for('public.subscribe') }}" method="POST" class="inline-form">
+                        <input type="email" name="email" placeholder="Your email" required class="form-input">
+                        <button type="submit" class="btn-secondary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

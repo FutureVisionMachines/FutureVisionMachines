@@ -1,0 +1,64 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Blog Manager{% endblock %}
+
+{% block content %}
+<div class="admin-content">
+    <div class="admin-header">
+        <div>
+            <h1>Blog Manager</h1>
+            <p>Manage your blog posts</p>
+        </div>
+        <div>
+            <a href="{{ url_for('admin.blog_create') }}" class="btn-primary">✍️ New Post</a>
+        </div>
+    </div>
+    
+    <div class="glass-panel">
+        {% if posts %}
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Views</th>
+                            <th>Published</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in posts %}
+                        <tr>
+                            <td>
+                                <div class="post-title">{{ post.title }}</div>
+                                <div class="post-slug">{{ post.slug }}</div>
+                            </td>
+                            <td><span class="badge {{ post.status|status_badge }}">{{ post.status }}</span></td>
+                            <td>{{ post.views }}</td>
+                            <td>{{ post.published_at|format_datetime('%b %d, %Y') if post.published_at else '-' }}</td>
+                            <td>
+                                <div class="action-buttons">
+                                    {% if post.status == 'published' %}
+                                    <a href="{{ url_for('public.blog_post', slug=post.slug) }}" target="_blank" class="btn-secondary-outline btn-sm">View</a>
+                                    {% endif %}
+                                    <a href="{{ url_for('admin.blog_edit', post_id=post.id) }}" class="btn-secondary-outline btn-sm">Edit</a>
+                                    <form action="{{ url_for('admin.blog_delete', post_id=post.id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Delete this post?');">
+                                        <button type="submit" class="btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p>No blog posts yet.</p>
+                <a href="{{ url_for('admin.blog_create') }}" class="btn-primary">Write Your First Post</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "admin/base.html" %}
+
+{% block title %}SaaS Manager{% endblock %}
+
+{% block content %}
+<div class="admin-content">
+    <div class="admin-header">
+        <div>
+            <h1>SaaS Product Manager</h1>
+            <p>Manage your SaaS products</p>
+        </div>
+        <div>
+            <a href="{{ url_for('admin.saas_create') }}" class="btn-primary">➕ Add Product</a>
+        </div>
+    </div>
+    
+    <div class=" glass-panel">
+        {% if products %}
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Pricing</th>
+                            <th>Version</th>
+                            <th>Featured</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                        <tr>
+                            <td>
+                                <div class="product-name">{{ product.name }}</div>
+                                <div class="product-slug">{{ product.slug }}</div>
+                            </td>
+                            <td><span class="badge {{ product.status|status_badge }}">{{ product.status }}</span></td>
+                            <td>
+                                {% if product.price_monthly %}${{ product.price_monthly }}/mo{% endif %}
+                                {% if product.price_yearly %}<br>${{ product.price_yearly }}/yr{% endif %}
+                            </td>
+                            <td>{{ product.version or '-' }}</td>
+                            <td>{% if product.featured %}✅{% else %}-{% endif %}</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="{{ url_for('admin.saas_edit', product_id=product.id) }}" class="btn-secondary-outline btn-sm">Edit</a>
+                                    <form action="{{ url_for('admin.saas_delete', product_id=product.id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Delete this product?');">
+                                        <button type="submit" class="btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p>No SaaS products yet.</p>
+                <a href="{{ url_for('admin.saas_create') }}" class="btn-primary">Add Your First Product</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,137 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Lead: {{ lead.name }}{% endblock %}
+
+{% block content %}
+<div class="admin-content">
+    <div class="admin-header">
+        <div>
+            <a href="{{ url_for('admin.crm') }}" class="back-link">← Back to CRM</a>
+            <h1>{{ lead.name }}</h1>
+            <p>Lead #{{ lead.id }} - <span class="badge {{ lead.status|status_badge }}">{{ lead.status }}</span></p>
+        </div>
+        <div class="header-actions">
+            <form action="{{ url_for('admin.crm_delete', lead_id=lead.id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this lead?');">
+                <button type="submit" class="btn-danger">Delete</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="crm-detail-layout">
+        <div class="crm-detail-main">
+            <!-- Contact Information -->
+            <div class="detail-card glass-panel">
+                <h3>Contact Information</h3>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Name</div>
+                        <div class="detail-value">{{ lead.name }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Email</div>
+                        <div class="detail-value"><a href="mailto:{{ lead.email }}">{{ lead.email }}</a></div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Phone</div>
+                        <div class="detail-value">{{ lead.phone or 'Not provided' }}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Business</div>
+                        <div class="detail-value">{{ lead.business or 'Not provided' }}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Problem Description -->
+            <div class="detail-card glass-panel">
+                <h3>Problem Description</h3>
+                <div class="problem-text">
+                    {{ lead.problem_description }}
+                </div>
+            </div>
+            
+            <!-- Update Form -->
+            <div class="detail-card glass-panel">
+                <h3>Update Lead</h3>
+                <form action="{{ url_for('admin.crm_update', lead_id=lead.id) }}" method="POST">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select id="status" name="status" class="form-input">
+                                <option value="new" {% if lead.status == 'new' %}selected{% endif %}>New</option>
+                                <option value="contacted" {% if lead.status == 'contacted' %}selected{% endif %}>Contacted</option>
+                                <option value="qualified" {% if lead.status == 'qualified' %}selected{% endif %}>Qualified</option>
+                                <option value="closed_won" {% if lead.status == 'closed_won' %}selected{% endif %}>Closed Won</option>
+                                <option value="closed_lost" {% if lead.status == 'closed_lost' %}selected{% endif %}>Closed Lost</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone" value="{{ lead.phone or '' }}" class="form-input">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tags">Tags</label>
+                        <input type="text" id="tags" name="tags" value="{{ lead.tags or '' }}" class="form-input" placeholder="Comma separated tags">
+                        <small class="form-hint">e.g., high-priority, automation, website</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="notes">Internal Notes</label>
+                        <textarea id="notes" name="notes" rows="6" class="form-input">{{ lead.notes or '' }}</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="mark_contacted" value="1">
+                            Mark as contacted (updates last contact time)
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">Update Lead</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="crm-detail-sidebar">
+            <!-- Metadata -->
+            <div class="detail-card glass-panel">
+                <h4>Lead Details</h4>
+                <div class="metadata-list">
+                    <div class="metadata-item">
+                        <div class="metadata-label">Source</div>
+                        <div class="metadata-value">{{ lead.source }}</div>
+                    </div>
+                    <div class="metadata-item">
+                        <div class="metadata-label">Created</div>
+                        <div class="metadata-value">{{ lead.created_at|format_datetime('%B %d, %Y at %H:%M') }}</div>
+                    </div>
+                    <div class="metadata-item">
+                        <div class="metadata-label">Last Updated</div>
+                        <div class="metadata-value">{{ lead.updated_at|format_datetime('%B %d, %Y at %H:%M') }}</div>
+                    </div>
+                    {% if lead.last_contact %}
+                    <div class="metadata-item">
+                        <div class="metadata-label">Last Contact</div>
+                        <div class="metadata-value">{{ lead.last_contact|format_datetime('%B %d, %Y') }}</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="detail-card glass-panel">
+                <h4>Quick Actions</h4>
+                <div class="quick-actions-list">
+                    <a href="mailto:{{ lead.email }}" class="quick-action-btn">📧 Send Email</a>
+                    {% if lead.phone %}
+                    <a href="tel:{{ lead.phone }}" class="quick-action-btn">📞 Call Lead</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

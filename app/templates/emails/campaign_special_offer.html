@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f4f4f4; }
+        .email-container { max-width: 600px; margin: 0 auto; background: #ffffff; }
+        .header { background: linear-gradient(135deg, #FF006E 0%, #00E5FF 100%); padding: 50px 30px; text-align: center; }
+        .badge { display: inline-block; background: rgba(255,255,255,0.3); color: #fff; padding: 8px 20px; border-radius: 20px; font-size: 14px; font-weight: 700; margin-bottom: 15px; }
+        .header h1 { margin: 0; color: #ffffff; font-size: 36px; font-weight: 900; }
+        .savings { background: rgba(255,255,255,0.2); color: #fff; padding: 15px; margin-top: 20px; border-radius: 8px; font-size: 18px; }
+        .content { padding: 40px 30px; }
+        .content h2 { color: #FF006E; font-size: 24px; margin-top: 0; margin-bottom: 20px; }
+        .content p { color: #333333; line-height: 1.8; margin-bottom: 15px; font-size: 16px; }
+        .offer-box { background: linear-gradient(135deg, rgba(255,0,110,0.1), rgba(0,229,255,0.1)); border: 2px solid #FF006E; padding: 30px; margin: 30px 0; border-radius: 12px; text-align: center; }
+        .offer-box h3 { margin: 0 0 15px 0; color: #FF006E; font-size: 22px; }
+        .offer-box p { margin: 0 0 10px 0; font-size: 16px; color: #333; }
+        .countdown { background: #1a1a1a; color: #00E5FF; padding: 20px; margin: 20px 0; border-radius: 8px; text-align: center; font-weight: 700; font-size: 18px; }
+        .cta-button { display: inline-block; padding: 18px 50px; background: linear-gradient(135deg, #FF006E, #7B61FF); color: #ffffff !important; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 20px; margin: 20px 0; }
+        .footer { background: #1a1a1a; color: #999999; padding: 30px; text-align: center; font-size: 14px; }
+        .footer a { color: #00E5FF; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <div class="badge">💰 LIMITED TIME OFFER</div>
+            <h1>{{ content.title or 'Exclusive Offer Just For You' }}</h1>
+            {% if content.offer_details %}
+            <div class="savings">{{ content.offer_details }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="content">
+            <p>Hi there,</p>
+            
+            <h2>Don't miss out on this exclusive opportunity!</h2>
+            
+            <p>{{ content.content or "We're offering you an exclusive discount on our premium solutions. This is a limited-time offer you won't want to miss." }}</p>
+            
+            <div class="offer-box">
+                <h3>🎁 What You Get:</h3>
+                <p>{{ content.offer_details or 'Special pricing on all our services' }}</p>
+                <p style="margin-top: 15px;"><strong>{{ content.content or 'Plus exclusive bonuses and priority support!' }}</strong></p>
+            </div>
+            
+            <div class="countdown">
+                ⏰ Offer expires soon - Act now!
+            </div>
+            
+            {% if content.cta_url %}
+            <p style="text-align: center;">
+                <a href="{{ content.cta_url }}" class="cta-button">{{ content.cta_text or 'Claim Your Offer' }}</a>
+            </p>
+            {% endif %}
+            
+            <p style="margin-top: 30px; font-size: 14px; color: #666;">
+                <em>This offer is exclusive to our valued subscribers. Terms and conditions apply.</em>
+            </p>
+            
+            <p style="margin-top: 30px;">
+                Best regards,<br>
+                <strong>The FutureVisionMachines Team</strong>
+            </p>
+        </div>
+        
+        <div class="footer">
+            <p><strong>FutureVisionMachines</strong></p>
+            <p>Enterprise-grade software solutions, made accessible.</p>
+            <p>Edmonton, Alberta, Canada</p>
+            <p style="margin-top: 20px; font-size: 12px;">
+                You're receiving this email because you subscribed to FutureVisionMachines updates.<br>
+                <a href="#">Unsubscribe</a> | <a href="#">Update Preferences</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

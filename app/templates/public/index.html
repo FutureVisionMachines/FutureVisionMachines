@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+
+{% block title %}Home - FutureVisionMachines{% endblock %}
+
+{% block content %}
+<!-- Professional Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <!-- Trust Badge -->
+            <div class="hero-badge">
+                <span class="badge badge-featured">Trusted by Forward-Thinking Businesses</span>
+            </div>
+            
+            <h1 class="hero-title">
+                Build Software That Actually
+                <span class="gradient-text">Works For Your Business</span>
+            </h1>
+            
+            <p class="hero-subtitle">
+                Custom enterprise software, intelligent automation, and internal tools built by experts who understand your challenges. No bloat. No complexity. Just solutions that drive results.
+            </p>
+            
+            <!-- Clear CTAs -->
+            <div class="hero-cta">
+                <a href="{{ url_for('public.contact') }}" class="btn-primary btn-lg btn-hero magnetic-btn">
+                    <span>Book Free Consultation</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 10h10M10 5l5 5-5 5"/>
+                    </svg>
+                </a>
+                <a href="{{ url_for('public.services') }}" class="btn-secondary-outline btn-lg magnetic-btn">View Our Services</a>
+            </div>
+            
+            <!-- Value Props -->
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Custom Built</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="stat-value">Fast</div>
+                    <div class="stat-label">Delivery</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="stat-value">ROI+</div>
+                    <div class="stat-label">Focused</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Visual Showcase -->
+        <div class="hero-showcase">
+            <div class="showcase-card">
+                <div class="showcase-header">
+                    <div class="showcase-icon">
+                        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="2" width="28" height="28" rx="4"/>
+                            <path d="M2 10h28M10 2v28"/>
+                        </svg>
+                    </div>
+                    <div class="showcase-title">Internal Systems</div>
+                </div>
+                <div class="showcase-features">
+                    <div class="feature-item">
+                        <svg width="16" height="16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>
+                        <span>CRM & Dashboards</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg width="16" height="16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>
+                        <span>Inventory Management</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg width="16" height="16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>
+                        <span>Data Analytics</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="showcase-card">
+                <div class="showcase-header">
+                    <div class="showcase-icon">
+                        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="16" cy="16" r="14"/>
+                            <path d="M16 6v10l6 6"/>
+                        </svg>
+                    </div>
+                    <div class="showcase-title">Automation</div>
+                </div>
+                <div class="showcase-features">
+                    <div class="feature-item">
+                        <svg width="16" height="16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>
+                        <span>Workflow Automation</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg width="16" height="16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>
+                        <span>API Integrations</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg width="16" height="16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>
+                        <span>Report Generation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- What We Do -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">What We Build</h2>
+            <p class="section-subtitle">Real solutions for real business problems</p>
+        </div>
+        
+        <div class="grid-3">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <div class="icon-glow cyan"></div>
+                    <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="4" y="4" width="32" height="32" rx="4"/>
+                        <path d="M12 20h16M12 28h10"/>
+                    </svg>
+                </div>
+                <h3 class="feature-title">Internal Systems</h3>
+                <p class="feature-description">
+                    Custom dashboards, CRMs, inventory systems, and operational tools that actually work for your business.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <div class="icon-glow purple"></div>
+                    <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="20" cy="20" r="16"/>
+                        <path d="M20 8v12l6 6"/>
+                    </svg>
+                </div>
+                <h3 class="feature-title">Automation</h3>
+                <p class="feature-description">
+                    Replace manual workflows with intelligent automation. Save time, reduce errors, focus on growth.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <div class="icon-glow cyan"></div>
+                    <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="6" y="4" width="28" height="32" rx="2"/>
+                        <path d="M6 12h28M14 4v8M26 4v8"/>
+                    </svg>
+                </div>
+                <h3 class="feature-title">Web Presence</h3>
+                <p class="feature-description">
+                    Modern, fast, professional websites that convert visitors into customers.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SaaS Highlight -->
+<section class="section section-dark">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Our SaaS Products</h2>
+            <p class="section-subtitle">Subscription-based tools ready to use today</p>
+        </div>
+        
+        <div class="saas-preview">
+            <p class="text-center">
+                <a href="{{ url_for('public.saas_hub') }}" class="btn-primary">Explore SaaS Hub</a>
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Value Proposition -->
+<section class="section">
+    <div class="container">
+        <div class="value-prop">
+            <div class="value-content">
+                <h2 class="section-title">Why Businesses Choose Us</h2>
+                <ul class="check-list">
+                    <li>You own your data and systems</li>
+                    <li>Enterprise quality at SMB pricing</li>
+                    <li>Built specifically for your workflow</li>
+                    <li>No bloated features you'll never use</li>
+                    <li>Local support, rapid iteration</li>
+                </ul>
+            </div>
+            <div class="value-visual">
+                <div class="stats-card glass-panel">
+                    <div class="stat">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">Custom Built</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">24-48hr</div>
+                        <div class="stat-label">Response Time</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">Local</div>
+                        <div class="stat-label">Edmonton Based</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section section-cta">
+    <div class="container">
+        <div class="cta-content">
+            <h2 class="cta-title">Ready to Upgrade Your Systems?</h2>
+            <p class="cta-text">Let's talk about what you need and how we can build it.</p>
+            <a href="{{ url_for('public.contact') }}" class="btn-primary btn-lg">Start a Conversation</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

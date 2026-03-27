@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - FutureVisionMachines Blog{% endblock %}
+{% block meta_description %}{{ post.meta_description or post.excerpt or post.content[:160] }}{% endblock %}
+{% block meta_keywords %}{{ post.meta_keywords }}{% endblock %}
+
+{% block content %}
+<article class="blog-post">
+    <header class="post-header">
+        <div class="container content-narrow">
+            <h1 class="post-title">{{ post.title }}</h1>
+            <div class="post-meta">
+                <span class="post-date">{{ post.published_at|format_datetime if post.published_at }}</span>
+                {% if post.views > 0 %}
+                <span class="post-views">{{ post.views }} views</span>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    
+    <section class="post-content">
+        <div class="container content-narrow">
+            <div class="prose">
+                {{ post.content|safe }}
+            </div>
+        </div>
+    </section>
+    
+    <footer class="post-footer">
+        <div class="container content-narrow">
+            <div class="post-cta glass-panel">
+                <h3>Interested in working together?</h3>
+                <p>Let's discuss how we can help solve your business challenges.</p>
+                <a href="{{ url_for('public.contact') }}" class="btn-primary">Get In Touch</a>
+            </div>
+            
+            <div class="post-back">
+                <a href="{{ url_for('public.blog') }}" class="btn-secondary-outline">← Back to Blog</a>
+            </div>
+        </div>
+    </footer>
+</article>
+{% endblock %}

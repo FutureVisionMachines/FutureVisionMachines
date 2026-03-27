@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #EAEAEA;
+            background: #050505;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #0A0A0A;
+            border: 1px solid #222;
+        }
+        .header {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(123, 97, 255, 0.1));
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 2px solid #00E5FF;
+        }
+        .header h1 {
+            color: #00E5FF;
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            padding: 30px 20px;
+        }
+        .info-box {
+            background: rgba(0, 229, 255, 0.05);
+            border-left: 3px solid #00E5FF;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .info-label {
+            color: #A0A0A0;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .info-value {
+            color: #EAEAEA;
+            font-weight: bold;
+        }
+        .footer {
+            background: #050505;
+            padding: 20px;
+            text-align: center;
+            color: #A0A0A0;
+            font-size: 14px;
+            border-top: 1px solid #222;
+        }
+        .footer a {
+            color: #00E5FF;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚨 New Lead Received</h1>
+        </div>
+        <div class="content">
+            <p>A new lead has been submitted through your website:</p>
+            
+            <div class="info-box">
+                <div class="info-label">Name</div>
+                <div class="info-value">{{ lead.name }}</div>
+            </div>
+            
+            <div class="info-box">
+                <div class="info-label">Email</div>
+                <div class="info-value">{{ lead.email }}</div>
+            </div>
+            
+            <div class="info-box">
+                <div class="info-label">Business</div>
+                <div class="info-value">{{ lead.business or 'Not provided' }}</div>
+            </div>
+            
+            {% if lead.phone %}
+            <div class="info-box">
+                <div class="info-label">Phone</div>
+                <div class="info-value">{{ lead.phone }}</div>
+            </div>
+            {% endif %}
+            
+            <div class="info-box">
+                <div class="info-label">Problem Description</div>
+                <div class="info-value">{{ lead.problem_description }}</div>
+            </div>
+            
+            <p style="margin-top: 30px;">
+                <strong>Next Steps:</strong> Log into your admin panel to view and manage this lead.
+            </p>
+        </div>
+        <div class="footer">
+            <p>FutureVisionMachines Admin Notification</p>
+            <p>Edmonton, Alberta, Canada</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}About - FutureVisionMachines{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-title">About FutureVisionMachines</h1>
+        <p class="page-subtitle">Making enterprise technology accessible to everyone</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container content-narrow">
+        <div class="content-block">
+            <h2>Our Story</h2>
+            <p>
+                FutureVisionMachines was founded with a single belief: powerful software shouldn't be restricted by cost or complexity.
+            </p>
+            <p>
+                Too many small and medium businesses struggle with manual processes, fragmented systems, and expensive "enterprise" tools 
+                that don't fit their needs. We exist to change that.
+            </p>
+            <p>
+                Based in Edmonton, Alberta, we're a software engineering agency focused on building custom solutions that actually solve problems—not 
+                generic products that force you to adapt your business to their limitations.
+            </p>
+        </div>
+        
+        <div class="content-block">
+            <h2>Mission</h2>
+            <p class="lead-text">
+                To make enterprise-grade software systems accessible, affordable, and impactful for businesses of all sizes, 
+                while contributing to the advancement of technology and strengthening local communities.
+            </p>
+        </div>
+        
+        <div class="content-block">
+            <h2>Vision</h2>
+            <p class="lead-text">
+                To evolve from a local software agency into a globally recognized leader in research, development, and innovation—shaping 
+                the future of technology and its integration into society.
+            </p>
+        </div>
+        
+        <div class="content-block">
+            <h2>Core Values</h2>
+            <div class="values-grid">
+                <div class="value-item">
+                    <h3>Accessibility of Technology</h3>
+                    <p>Enterprise tools should not be restricted by cost or complexity.</p>
+                </div>
+                <div class="value-item">
+                    <h3>Community Advancement</h3>
+                    <p>Technology should directly improve local economies and quality of life.</p>
+                </div>
+                <div class="value-item">
+                    <h3>Engineering Excellence</h3>
+                    <p>Solutions must be robust, scalable, and maintainable.</p>
+                </div>
+                <div class="value-item">
+                    <h3>Future-Focused Innovation</h3>
+                    <p>Continuous learning and adaptation to emerging technologies.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-block">
+            <h2>The Founder</h2>
+            <p>
+                <strong>Anthony Tyler-Scott Dinunzio</strong> is a self-developed software engineer with deep roots in technology 
+                and systems design. From early experiments with game modding and server hosting to leading complex engineering 
+                projects in the oil & gas sector, Anthony brings real-world problem-solving experience to every project.
+            </p>
+            <p>
+                FutureVisionMachines represents more than a business—it's a long-term commitment to building tools that matter 
+                and contributing to how technology shapes our world.
+            </p>
+        </div>
+        
+        <div class="cta-box">
+            <h3>Let's Build Something Together</h3>
+            <p>Ready to transform your business operations with custom software?</p>
+            <a href="{{ url_for('public.contact') }}" class="btn-primary">Get In Touch</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

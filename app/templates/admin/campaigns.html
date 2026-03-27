@@ -1,0 +1,429 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Email Campaigns{% endblock %}
+
+{% block content %}
+<div class="admin-content">
+    <div class="admin-header">
+        <h1>📬 Email Campaigns</h1>
+        <p>Send newsletters and updates to your subscribers</p>
+    </div>
+
+    <div class="glass-panel">
+        <div class="campaign-stats">
+            <div class="stat-box">
+                <div class="stat-value">{{ subscribers|length }}</div>
+                <div class="stat-label">Active Subscribers</div>
+            </div>
+        </div>
+
+        <form action="{{ url_for('admin.campaign_send') }}" method="POST" id="campaignForm" class="campaign-form">
+            
+            <!-- Step 1: Choose Template -->
+            <div class="form-section">
+                <h2>1. Choose Template</h2>
+                <div class="template-grid">
+                    {% for template in templates %}
+                    <label class="template-card">
+                        <input type="radio" name="template_id" value="{{ template.id }}" 
+                               {% if loop.first %}checked{% endif %} 
+                               onchange="updateTemplateFields('{{ template.id }}')">
+                        <div class="template-content">
+                            <div class="template-icon">{{ template.icon }}</div>
+                            <div class="template-name">{{ template.name }}</div>
+                            <div class="template-desc">{{ template.description }}</div>
+                        </div>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Step 2: Email Content -->
+            <div class="form-section">
+                <h2>2. Email Content</h2>
+                
+                <div class="form-group">
+                    <label for="subject">Email Subject *</label>
+                    <input type="text" id="subject" name="subject" class="form-input" 
+                           placeholder="Your compelling subject line" required>
+                </div>
+
+                <!-- Newsletter Template Fields -->
+                <div id="fields-newsletter" class="template-fields">
+                    <div class="form-group">
+                        <label for="news-title">Newsletter Title</label>
+                        <input type="text" name="content_title" class="form-input" 
+                               placeholder="This Month's Updates">
+                    </div>
+                    <div class="form-group">
+                        <label for="news-content">Newsletter Content</label>
+                        <textarea name="content_body" class="form-textarea" rows="6"
+                                  placeholder="Share your latest news, updates, and insights..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Key Updates (Optional)</label>
+                        <input type="text" name="feature_1" class="form-input" 
+                               placeholder="Update #1" style="margin-bottom: 10px;">
+                        <input type="text" name="feature_2" class="form-input" 
+                               placeholder="Update #2" style="margin-bottom: 10px;">
+                        <input type="text" name="feature_3" class="form-input" 
+                               placeholder="Update #3">
+                    </div>
+                </div>
+
+                <!-- Product Launch Template Fields -->
+                <div id="fields-product_launch" class="template-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="product-name">Product Name</label>
+                        <input type="text" name="content_title" class="form-input" 
+                               placeholder="Introducing Our New Product">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-desc">Product Description</label>
+                        <textarea name="content_body" class="form-textarea" rows="6"
+                                  placeholder="Describe what makes this product special..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Key Features</label>
+                        <input type="text" name="feature_1" class="form-input" 
+                               placeholder="Feature #1" style="margin-bottom: 10px;">
+                        <input type="text" name="feature_2" class="form-input" 
+                               placeholder="Feature #2" style="margin-bottom: 10px;">
+                        <input type="text" name="feature_3" class="form-input" 
+                               placeholder="Feature #3">
+                    </div>
+                    <div class="form-group">
+                        <label for="cta-text">Call-to-Action Text</label>
+                        <input type="text" name="cta_text" class="form-input" 
+                               placeholder="Try It Now" value="Learn More">
+                    </div>
+                    <div class="form-group">
+                        <label for="cta-url">Call-to-Action URL</label>
+                        <input type="url" name="cta_url" class="form-input" 
+                               placeholder="https://yourdomain.com/product">
+                    </div>
+                </div>
+
+                <!-- Special Offer Template Fields -->
+                <div id="fields-special_offer" class="template-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="offer-title">Offer Title</label>
+                        <input type="text" name="content_title" class="form-input" 
+                               placeholder="Limited Time: 50% Off">
+                    </div>
+                    <div class="form-group">
+                        <label for="offer-details">Offer Details</label>
+                        <textarea name="offer_details" class="form-textarea" rows="4"
+                                  placeholder="Describe the special offer, discount, or promotion..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="offer-content">Additional Information</label>
+                        <textarea name="content_body" class="form-textarea" rows="4"
+                                  placeholder="Terms, conditions, or additional details..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="cta-text">Call-to-Action Text</label>
+                        <input type="text" name="cta_text" class="form-input" 
+                               placeholder="Claim Offer" value="Get Started">
+                    </div>
+                    <div class="form-group">
+                        <label for="cta-url">Call-to-Action URL</label>
+                        <input type="url" name="cta_url" class="form-input" 
+                               placeholder="https://yourdomain.com/offer">
+                    </div>
+                </div>
+
+                <!-- Company Update Template Fields -->
+                <div id="fields-company_update" class="template-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="update-title">Update Title</label>
+                        <input type="text" name="content_title" class="form-input" 
+                               placeholder="Exciting News from Our Team">
+                    </div>
+                    <div class="form-group">
+                        <label for="update-content">Update Details</label>
+                        <textarea name="content_body" class="form-textarea" rows="8"
+                                  placeholder="Share company news, milestones, achievements..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="cta-text">Call-to-Action Text (Optional)</label>
+                        <input type="text" name="cta_text" class="form-input" 
+                               placeholder="Read Full Story">
+                    </div>
+                    <div class="form-group">
+                        <label for="cta-url">Call-to-Action URL (Optional)</label>
+                        <input type="url" name="cta_url" class="form-input" 
+                               placeholder="https://yourdomain.com/news">
+                    </div>
+                </div>
+
+                <!-- Custom Template Fields -->
+                <div id="fields-custom" class="template-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="custom-title">Email Title</label>
+                        <input type="text" name="custom_title" class="form-input" 
+                               placeholder="Your email title">
+                    </div>
+                    <div class="form-group">
+                        <label for="custom-content">Email Content</label>
+                        <textarea name="custom_content" class="form-textarea" rows="10"
+                                  placeholder="Write your custom email content here..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="custom-cta-text">Call-to-Action Text (Optional)</label>
+                        <input type="text" name="custom_cta_text" class="form-input" 
+                               placeholder="Click Here">
+                    </div>
+                    <div class="form-group">
+                        <label for="custom-cta-url">Call-to-Action URL (Optional)</label>
+                        <input type="url" name="custom_cta_url" class="form-input" 
+                               placeholder="https://yourdomain.com">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Select Recipients -->
+            <div class="form-section">
+                <h2>3. Select Recipients</h2>
+                
+                <div class="form-group">
+                    <label class="radio-option">
+                        <input type="radio" name="recipient_type" value="all" checked 
+                               onchange="toggleRecipientSelect()">
+                        <span>Send to All Active Subscribers ({{ subscribers|length }})</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="recipient_type" value="selected" 
+                               onchange="toggleRecipientSelect()">
+                        <span>Select Specific Subscribers</span>
+                    </label>
+                </div>
+
+                <div id="subscriberSelect" class="subscriber-select" style="display: none;">
+                    <div class="subscriber-list">
+                        {% for sub in subscribers %}
+                        <label class="subscriber-item">
+                            <input type="checkbox" name="selected_subscribers" value="{{ sub.id }}">
+                            <span>{{ sub.email }}</span>
+                            <small>Subscribed: {{ sub.subscribed_at.strftime('%Y-%m-%d') }}</small>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="form-actions">
+                <button type="submit" class="btn-primary" 
+                        onclick="return confirm('Send campaign to selected subscribers?');">
+                    📨 Send Campaign
+                </button>
+                <button type="button" class="btn-secondary-outline" 
+                        onclick="previewCampaign()">
+                    👁️ Preview
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function updateTemplateFields(templateId) {
+    // Hide all template fields
+    document.querySelectorAll('.template-fields').forEach(el => {
+        el.style.display = 'none';
+    });
+    
+    // Show selected template fields
+    const selectedFields = document.getElementById('fields-' + templateId);
+    if (selectedFields) {
+        selectedFields.style.display = 'block';
+    }
+}
+
+function toggleRecipientSelect() {
+    const selectedRadio = document.querySelector('input[name="recipient_type"]:checked');
+    const selectDiv = document.getElementById('subscriberSelect');
+    
+    if (selectedRadio && selectedRadio.value === 'selected') {
+        selectDiv.style.display = 'block';
+    } else {
+        selectDiv.style.display = 'none';
+    }
+}
+
+function previewCampaign() {
+    const form = document.getElementById('campaignForm');
+    const previewForm = form.cloneNode(true);
+    previewForm.action = "{{ url_for('admin.campaign_preview') }}";
+    previewForm.target = "_blank";
+    previewForm.submit();
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    updateTemplateFields('newsletter');
+});
+</script>
+
+<style>
+.campaign-stats {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+}
+
+.stat-box {
+    text-align: center;
+    padding: var(--spacing-lg);
+    background: rgba(0, 229, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(0, 229, 255, 0.2);
+}
+
+.stat-box .stat-value {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.stat-box .stat-label {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.campaign-form {
+    max-width: 900px;
+}
+
+.form-section {
+    margin-bottom: calc(var(--spacing-xl) * 1.5);
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+}
+
+.form-section h2 {
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-lg);
+    font-size: 1.5rem;
+}
+
+.template-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.template-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.template-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.template-content {
+    padding: var(--spacing-lg);
+    background: rgba(17, 17, 17, 0.6);
+    border: 2px solid rgba(0, 229, 255, 0.2);
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.template-card input[type="radio"]:checked + .template-content {
+    border-color: var(--color-primary);
+    background: rgba(0, 229, 255, 0.1);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+}
+
+.template-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.template-name {
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-xs);
+}
+
+.template-desc {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.radio-option {
+    display: block;
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    background: rgba(17, 17, 17, 0.4);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.radio-option:hover {
+    border-color: var(--color-primary);
+}
+
+.radio-option input[type="radio"] {
+    margin-right: var(--spacing-sm);
+}
+
+.subscriber-select {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: rgba(17, 17, 17, 0.4);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    border-radius: 12px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.subscriber-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.subscriber-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: rgba(17, 17, 17, 0.6);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.subscriber-item:hover {
+    background: rgba(0, 229, 255, 0.05);
+}
+
+.subscriber-item input[type="checkbox"] {
+    margin: 0;
+}
+
+.subscriber-item small {
+    margin-left: auto;
+    color: var(--color-text-secondary);
+}
+
+.form-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+}
+</style>
+{% endblock %}

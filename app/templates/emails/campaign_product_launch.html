@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f4f4f4; }
+        .email-container { max-width: 600px; margin: 0 auto; background: #ffffff; }
+        .header { background: linear-gradient(135deg, #7B61FF 0%, #00E5FF 100%); padding: 50px 30px; text-align: center; }
+        .header h1 { margin: 0; color: #ffffff; font-size: 32px; font-weight: 900; }
+        .header p { color: rgba(255,255,255,0.9); margin-top: 10px; font-size: 18px; }
+        .content { padding: 40px 30px; }
+        .content h2 { color: #1a1a1a; font-size: 26px; margin-top: 0; margin-bottom: 20px; }
+        .content p { color: #333333; line-height: 1.8; margin-bottom: 15px; font-size: 16px; }
+        .features { margin: 30px 0; }
+        .feature-item { background: #f8f9fa; padding: 20px; margin-bottom: 15px; border-radius: 8px; border-left: 4px solid #7B61FF; }
+        .feature-item h3 { margin: 0 0 8px 0; color: #7B61FF; font-size: 18px; }
+        .feature-item p { margin: 0; color: #555; font-size: 15px; }
+        .cta-section { background: linear-gradient(135deg, rgba(0,229,255,0.1), rgba(123,97,255,0.1)); padding: 30px; text-align: center; margin: 30px 0; border-radius: 12px; }
+        .cta-button { display: inline-block; padding: 16px 40px; background: linear-gradient(135deg, #00E5FF, #7B61FF); color: #ffffff !important; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 18px; }
+        .footer { background: #1a1a1a; color: #999999; padding: 30px; text-align: center; font-size: 14px; }
+        .footer a { color: #00E5FF; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>🚀 {{ content.title or 'Introducing Our Latest Innovation' }}</h1>
+            <p>Something exciting is here</p>
+        </div>
+        
+        <div class="content">
+            <p>Hi there,</p>
+            
+            <h2>We're thrilled to announce...</h2>
+            
+            <p>{{ content.content or "We've been working hard to bring you something special, and it's finally ready." }}</p>
+            
+            {% if content.feature_1 or content.feature_2 or content.feature_3 %}
+            <div class="features">
+                <h3 style="color: #7B61FF; margin-bottom: 20px;">✨ What Makes It Special</h3>
+                
+                {% if content.feature_1 %}
+                <div class="feature-item">
+                    <h3>🎯 {{ content.feature_1.split(':')[0] if ':' in content.feature_1 else 'Key Feature' }}</h3>
+                    <p>{{ content.feature_1.split(':', 1)[1] if ':' in content.feature_1 else content.feature_1 }}</p>
+                </div>
+                {% endif %}
+                
+                {% if content.feature_2 %}
+                <div class="feature-item">
+                    <h3>⚡ {{ content.feature_2.split(':')[0] if ':' in content.feature_2 else 'Key Feature' }}</h3>
+                    <p>{{ content.feature_2.split(':', 1)[1] if ':' in content.feature_2 else content.feature_2 }}</p>
+                </div>
+                {% endif %}
+                
+                {% if content.feature_3 %}
+                <div class="feature-item">
+                    <h3>💎 {{ content.feature_3.split(':')[0] if ':' in content.feature_3 else 'Key Feature' }}</h3>
+                    <p>{{ content.feature_3.split(':', 1)[1] if ':' in content.feature_3 else content.feature_3 }}</p>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+            
+            {% if content.cta_url %}
+            <div class="cta-section">
+                <p style="font-size: 18px; color: #333; margin-bottom: 20px;">Ready to experience it yourself?</p>
+                <a href="{{ content.cta_url }}" class="cta-button">{{ content.cta_text or 'Get Started Now' }}</a>
+            </div>
+            {% endif %}
+            
+            <p style="margin-top: 30px;">
+                Best regards,<br>
+                <strong>The FutureVisionMachines Team</strong>
+            </p>
+        </div>
+        
+        <div class="footer">
+            <p><strong>FutureVisionMachines</strong></p>
+            <p>Enterprise-grade software solutions, made accessible.</p>
+            <p>Edmonton, Alberta, Canada</p>
+            <p style="margin-top: 20px; font-size: 12px;">
+                You're receiving this email because you subscribed to FutureVisionMachines updates.<br>
+                <a href="#">Unsubscribe</a> | <a href="#">Update Preferences</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

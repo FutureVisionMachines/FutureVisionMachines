@@ -1,0 +1,51 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Subscribers{% endblock %}
+
+{% block content %}
+<div class="admin-content">
+    <div class="admin-header">
+        <h1>Email Subscribers</h1>
+        <p>Manage your newsletter subscribers</p>
+    </div>
+    
+    <div class="glass-panel">
+        {% if subscribers %}
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Source</th>
+                            <th>Subscribed</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sub in subscribers %}
+                        <tr>
+                            <td>{{ sub.email }}</td>
+                            <td>{{ sub.name or '-' }}</td>
+                            <td><span class="badge {{ sub.status|status_badge }}">{{ sub.status }}</span></td>
+                            <td>{{ sub.source }}</td>
+                            <td>{{ sub.subscribed_at|format_datetime('%b %d, %Y') }}</td>
+                            <td>
+                                <form action="{{ url_for('admin.subscriber_delete', subscriber_id=sub.id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Delete this subscriber?');">
+                                    <button type="submit" class="btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p>No subscribers yet.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
